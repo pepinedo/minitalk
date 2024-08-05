@@ -1,41 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppinedo- <ppinedo-@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/05 13:09:40 by ppinedo-          #+#    #+#             */
+/*   Updated: 2024/08/05 16:14:28 by ppinedo-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minitalk.h"
+
+int g_call;
 
 void	print_bits(int x)
 {
-	static int	bit = 7;
-	static int	set = 0;
+	static unsigned char	bits;
+	int i;
 
-	set += (x << bit);
-	if (bit == 0)
+	if (!bits)
+		bits = 0;
+	if (x == SIGUSR2)
+		bits = bits << 1;
+	if (x == SIGUSR1)
 	{
-		ft_printf("%c", set);
-		bit = 7;
-		set = 0;
+		bits == bits << 1;
+		bits |= 1;
 	}
-	else
-		bit--;
+	if ()
+	g_call++;
 }
 
 void	handler(int a)
 {
 	if (a == SIGUSR1)
 	{
-		print_bits(1);
+		ft_printf("Soy el 1\n");
+		// print_bits(1);
 	}
 	else if (a == SIGUSR2)
 	{
-		print_bits(0);
+		ft_printf("Soy el 1\n");
+		// print_bits(0);
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	struct sigaction	signal_received;
+	struct sigaction act;
 
 	ft_printf("Welcome to Pedro's server.\n");
 	ft_printf("My PID is %d\n", getpid());
-	sigaction(SIGUSR1, (int)handler, NULL);
-	sigaction(SIGUSR2, (int)handler, NULL);
+	act.sa_handler = handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	g_call = 0;
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
 	while (1)
 		pause();
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppinedo- <ppinedo-@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/05 13:08:11 by ppinedo-          #+#    #+#             */
+/*   Updated: 2024/08/05 13:08:12 by ppinedo-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minitalk.h"
 
 void	send_signals(int pid, char *str)
@@ -42,10 +54,7 @@ int main(int argc, char **argv)
         }
         message = argv[2];
         if (message[0] == 0)
-        {
-            ft_printf("[ERROR]. No message\n");
-            return(0);
-        }
+            return(ft_printf("[ERROR]. No message\n"), 0);
         send_signals(pid, message);
     }
     else
