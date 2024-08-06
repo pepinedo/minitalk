@@ -6,35 +6,38 @@
 /*   By: ppinedo- <ppinedo-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:09:40 by ppinedo-          #+#    #+#             */
-/*   Updated: 2024/08/05 20:49:57 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:28:17 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void handler(int x) {
-    static unsigned char bits = 0;
-    static int bit_count = 0;
+void	writing_signal(int x)
+{
+	static int	bit = 7;
+	static int	set = 0;
 
-    if (x == SIGUSR2) {
-        bits = bits << 1;  // Shift bit left
-    } else if (x == SIGUSR1) {
-        bits = (bits << 1) | 1;  // Shift bit left and add 1
-    }
-    bit_count++;
-
-    if (bit_count == 8) {  // After receiving 8 bits (1 byte)
-        if (bits == 0) {  // End of message
-            ft_printf("\n");
-        } else {
-            ft_printf("%c", bits);
-        }
-        bit_count = 0;
-        bits = 0;
-    }
+	set += (x << bit);
+	if (bit == 0)
+	{
+		ft_printf("%c", set);
+		bit = 7;
+		set = 0;
+	}
+	else
+		bit--;
 }
 
-int main(void) {
+void	handler(int x)
+{
+	if (x == SIGUSR2)
+		writing_signal(1);
+	else
+		writing_signal(0);
+}
+
+int main(void)
+{
     struct sigaction act;
 
     ft_printf("Welcome to Pedro's server.\n");
@@ -45,5 +48,5 @@ int main(void) {
     sigaction(SIGUSR1, &act, NULL);
     sigaction(SIGUSR2, &act, NULL);
     while (1)
-        pause();
+        ;
 }

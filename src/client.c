@@ -6,66 +6,48 @@
 /*   By: ppinedo- <ppinedo-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:08:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2024/08/06 17:11:12 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:39:11 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void send_signals(int pid, char *str)
+void send_signal(int pid, char *str)
 {
-    int i;
-    int j;
+	int				i;
+	unsigned char	c;
 
-    i = 0;
-    while (str[i])
+	while (*str)
 	{
-        j = 7;
-        while (j >= 0)
+		i = 7;
+		c = *str++;
+		while (i >= 0)
 		{
-            if (((str[i] >> j) & 1) == 0)
-                kill(pid, SIGUSR1);
-            else
-                kill(pid, SIGUSR2);
-            usleep(50); 
-            j--;
-        }
-        i++;
-    }
-    j = 0;
-    while (j < 8)
-	{
-        kill(pid, SIGUSR1);
-        usleep(50); 
-        j++;
-    }
+			if ((c >> i) & 1)
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			usleep(50);
+			i--;
+		}
+	}
 }
 
 int main(int argc, char **argv)
 {
-    char *message;
-    int pid;
+	int	pid;
 
-    if (argc == 3)
+	pid = ft_atoi(argv[1]);
+	if (argc != 3)
 	{
-        pid = ft_atoi(argv[1]);
-        if (pid <= 0)
-		{
-            ft_printf("[ERROR]. Wrong PID\n");
-            return(0);
-        }
-        message = argv[2];
-        if (message[0] == 0)
-		{
-            ft_printf("[ERROR]. No message\n");
-            return(0);
-        }
-        send_signals(pid, message);
-    }
-	else
+		ft_printf("[Error]: wrong arguments\n");
+        ft_printf("[Usage]: ./client <PID> <MESSAGE>\n");
+		return (0);
+	}
+	else if (pid <= 0)
 	{
-        ft_printf("[ERROR]. Wrong arguments\n");
-        ft_printf("Usage: ./client <PID> <MESSAGE>\n");
-    }
-    return(0);
+		ft_printf("[Error]: Wrong PID!\n");
+		return (0);
+	}
+	send_signal(pid, argv[2]);
 }
