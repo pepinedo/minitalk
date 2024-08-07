@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppinedo- <ppinedo-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: ppinedo- <ppinedo-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:09:40 by ppinedo-          #+#    #+#             */
-/*   Updated: 2024/08/06 19:28:17 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:48:30 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ void	handler(int x)
 		writing_signal(0);
 }
 
-int main(void)
+int	main(void)
 {
-    struct sigaction act;
+	struct sigaction	act;
 
-    ft_printf("Welcome to Pedro's server.\n");
-    ft_printf("My PID is %d\n", getpid());
-    act.sa_handler = handler;
-    sigemptyset(&act.sa_mask);
-    act.sa_flags = 0;
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGUSR2, &act, NULL);
-    while (1)
-        ;
+	ft_printf("Welcome to Pedro's server.\n");
+	ft_printf("My PID is %d\n", getpid());
+	act.sa_handler = handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
+	while (1)
+		;
 }

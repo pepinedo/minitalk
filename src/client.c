@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppinedo- <ppinedo-@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: ppinedo- <ppinedo-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:08:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2024/08/06 17:39:11 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:54:53 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void send_signal(int pid, char *str)
+void	send_signal(int pid, char *str)
 {
 	int				i;
 	unsigned char	c;
@@ -33,7 +33,7 @@ void send_signal(int pid, char *str)
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int	pid;
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 	if (argc != 3)
 	{
 		ft_printf("[Error]: wrong arguments\n");
-        ft_printf("[Usage]: ./client <PID> <MESSAGE>\n");
+		ft_printf("[Usage]: ./client <PID> <MESSAGE>\n");
 		return (0);
 	}
 	else if (pid <= 0)
