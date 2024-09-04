@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppinedo- <ppinedo-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ppinedo- <ppinedo-@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 13:08:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2024/08/07 12:54:53 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:57:38 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ int	main(int argc, char **argv)
 {
 	int	pid;
 
-	pid = ft_atoi(argv[1]);
 	if (argc != 3)
 	{
 		ft_printf("[Error]: wrong arguments\n");
-		ft_printf("[Usage]: ./client <PID> <MESSAGE>\n");
+		ft_printf("[Usage]: ./client <PID> \"<MESSAGE>\"\n");
 		return (0);
 	}
-	else if (pid <= 0)
+	pid = ft_atoi(argv[1]);
+	if (pid <= 0)
 	{
 		ft_printf("[Error]: Wrong PID!\n");
 		return (0);
 	}
-	send_signal(pid, argv[2]);
+		send_signal(pid, argv[2]);
 }
